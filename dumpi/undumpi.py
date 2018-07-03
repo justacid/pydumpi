@@ -2,7 +2,9 @@ from ctypes import cast, POINTER
 from .callbacks import DumpiCallbacks, CALLBACK
 from .constants import DataType
 from .dtypes import *
+import traceback
 import time
+import sys
 
 
 libundumpi = CDLL("libundumpi.so.8")
@@ -714,1455 +716,2619 @@ class DumpiTrace:
 
     def __on_send(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiSend))
-        self.on_send(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_send(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_recv(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiRecv))
-        self.on_recv(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_recv(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_get_count(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiGetCount))
-        self.on_get_count(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_get_count(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_bsend(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiBSend))
-        self.on_bsend(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_bsend(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_ssend(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiSSend))
-        self.on_ssend(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_ssend(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_rsend(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiRSend))
-        self.on_rsend(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_rsend(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_buffer_attach(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiBufferAttach))
-        self.on_buffer_attach(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_buffer_attach(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_buffer_detach(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiBufferDetach))
-        self.on_buffer_detach(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_buffer_detach(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_isend(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiISend))
-        self.on_isend(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_isend(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_ibsend(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiIbSend))
-        self.on_ibsend(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_ibsend(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_issend(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiIsSend))
-        self.on_issend(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_issend(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_irsend(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiIrSend))
-        self.on_irsend(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_irsend(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_irecv(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiIRecv))
-        self.on_irecv(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_irecv(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_wait(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiWait))
-        self.on_wait(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_wait(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_test(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiTest))
-        self.on_test(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_test(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_request_free(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiRequestFree))
-        self.on_request_free(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_request_free(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_waitany(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiWaitAny))
-        self.on_waitany(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_waitany(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_testany(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiTestAny))
-        self.on_testany(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_testany(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_waitall(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiWaitAll))
-        self.on_waitall(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_waitall(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_testall(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiTestAll))
-        self.on_testall(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_testall(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_waitsome(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiWaitSome))
-        self.on_waitsome(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_waitsome(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_testsome(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiTestSome))
-        self.on_testsome(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_testsome(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_iprobe(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiIprobe))
-        self.on_iprobe(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_iprobe(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_probe(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiProbe))
-        self.on_probe(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_probe(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_cancel(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiCancel))
-        self.on_cancel(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_cancel(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_test_cancelled(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiTestCancelled))
-        self.on_test_cancelled(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_test_cancelled(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_send_init(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiSendInit))
-        self.on_send_init(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_send_init(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_bsend_init(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiBsendInit))
-        self.on_bsend_init(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_bsend_init(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_ssend_init(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiSsendInit))
-        self.on_ssend_init(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_ssend_init(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_rsend_init(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiRsendInit))
-        self.on_rsend_init(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_rsend_init(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_recv_init(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiRecvInit))
-        self.on_recv_init(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_recv_init(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_start(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiStart))
-        self.on_start(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_start(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_startall(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiStartall))
-        self.on_startall(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_startall(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_sendrecv(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiSendrecv))
-        self.on_sendrecv(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_sendrecv(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_sendrecv_replace(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiSendrecvReplace))
-        self.on_sendrecv_replace(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_sendrecv_replace(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_type_contiguous(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiTypeContiguous))
-        self.on_type_contiguous(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_type_contiguous(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_type_vector(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiTypeVector))
-        self.on_type_vector(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_type_vector(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_type_hvector(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiTypeHvector))
-        self.on_type_hvector(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_type_hvector(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_type_indexed(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiTypeIndexed))
-        self.on_type_indexed(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_type_indexed(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_type_hindexed(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiTypeHindexed))
-        self.on_type_hindexed(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_type_hindexed(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_type_struct(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiTypeStruct))
-        self.on_type_struct(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_type_struct(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_address(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiAddress))
-        self.on_address(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_address(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_type_extent(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiTypeExtent))
-        self.on_type_extent(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_type_extent(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_type_size(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiTypeSize))
-        self.on_type_size(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_type_size(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_type_lb(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiTypeLb))
-        self.on_type_lb(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_type_lb(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_type_ub(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiTypeUb))
-        self.on_type_ub(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_type_ub(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_type_commit(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiTypeCommit))
-        self.on_type_commit(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_type_commit(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_type_free(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiTypeFree))
-        self.on_type_free(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_type_free(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_get_elements(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiGetElements))
-        self.on_get_elements(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_get_elements(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_pack(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiPack))
-        self.on_pack(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_pack(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_unpack(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiUnpack))
-        self.on_unpack(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_unpack(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_pack_size(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiPackSize))
-        self.on_pack_size(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_pack_size(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_barrier(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiBarrier))
-        self.on_barrier(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_barrier(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_bcast(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiBcast))
-        self.on_bcast(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_bcast(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_gather(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiGather))
-        self.on_gather(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_gather(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_gatherv(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiGatherv))
-        self.on_gatherv(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_gatherv(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_scatter(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiScatter))
-        self.on_scatter(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_scatter(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_scatterv(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiScatterv))
-        self.on_scatterv(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_scatterv(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_allgather(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiAllgather))
-        self.on_allgather(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_allgather(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_allgatherv(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiAllgatherv))
-        self.on_allgatherv(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_allgatherv(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_alltoall(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiAlltoall))
-        self.on_alltoall(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_alltoall(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_alltoallv(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiAlltoallv))
-        self.on_alltoallv(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_alltoallv(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_reduce(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiReduce))
-        self.on_reduce(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_reduce(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_op_create(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiOpCreate))
-        self.on_op_create(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_op_create(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_op_free(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiOpFree))
-        self.on_op_free(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_op_free(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_allreduce(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiAllreduce))
-        self.on_allreduce(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_allreduce(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_reduce_scatter(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiReduceScatter))
-        self.on_reduce_scatter(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_reduce_scatter(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_scan(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiScan))
-        self.on_scan(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_scan(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_group_size(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiGroupSize))
-        self.on_group_size(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_group_size(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_group_rank(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiGroupRank))
-        self.on_group_rank(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_group_rank(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_group_translate_ranks(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiGroupTranslateRanks))
-        self.on_group_translate_ranks(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_group_translate_ranks(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_group_compare(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiGroupCompare))
-        self.on_group_compare(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_group_compare(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_comm_group(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiCommGroup))
-        self.on_comm_group(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_comm_group(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_group_union(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiGroupUnion))
-        self.on_group_union(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_group_union(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_group_intersection(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiGroupIntersection))
-        self.on_group_intersection(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_group_intersection(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_group_difference(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiGroupDifference))
-        self.on_group_difference(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_group_difference(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_group_incl(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiGroupIncl))
-        self.on_group_incl(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_group_incl(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_group_excl(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiGroupExcl))
-        self.on_group_excl(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_group_excl(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_group_range_incl(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiGroupRangeIncl))
-        self.on_group_range_incl(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_group_range_incl(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_group_range_excl(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiGroupRangeExcl))
-        self.on_group_range_excl(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_group_range_excl(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_group_free(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiGroupFree))
-        self.on_group_free(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_group_free(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_comm_size(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiCommSize))
-        self.on_comm_size(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_comm_size(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_comm_rank(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiCommRank))
-        self.on_comm_rank(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_comm_rank(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_comm_compare(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiCommCompare))
-        self.on_comm_compare(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_comm_compare(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_comm_dup(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiCommDup))
-        self.on_comm_dup(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_comm_dup(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_comm_create(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiCommCreate))
-        self.on_comm_create(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_comm_create(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_comm_split(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiCommSplit))
-        self.on_comm_split(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_comm_split(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_comm_free(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiCommFree))
-        self.on_comm_free(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_comm_free(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_comm_test_inter(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiCommTestInter))
-        self.on_comm_test_inter(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_comm_test_inter(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_comm_remote_size(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiCommRemoteSize))
-        self.on_comm_remote_size(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_comm_remote_size(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_comm_remote_group(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiCommRemoteGroup))
-        self.on_comm_remote_group(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_comm_remote_group(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_intercomm_create(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiIntercommCreate))
-        self.on_intercomm_create(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_intercomm_create(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_intercomm_merge(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiIntercommMerge))
-        self.on_intercomm_merge(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_intercomm_merge(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_keyval_create(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiKeyvalCreate))
-        self.on_keyval_create(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_keyval_create(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_keyval_free(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiKeyvalFree))
-        self.on_keyval_free(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_keyval_free(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_attr_put(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiAttrPut))
-        self.on_attr_put(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_attr_put(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_attr_get(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiAttrGet))
-        self.on_attr_get(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_attr_get(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_attr_delete(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiAttrDelete))
-        self.on_attr_delete(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_attr_delete(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_topo_test(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiTopoTest))
-        self.on_topo_test(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_topo_test(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_cart_create(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiCartCreate))
-        self.on_cart_create(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_cart_create(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_dims_create(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiDimsCreate))
-        self.on_dims_create(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_dims_create(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_graph_create(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiGraphCreate))
-        self.on_graph_create(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_graph_create(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_graphdims_get(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiGraphdimsGet))
-        self.on_graphdims_get(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_graphdims_get(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_graph_get(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiGraphGet))
-        self.on_graph_get(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_graph_get(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_cartdim_get(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiCartdimGet))
-        self.on_cartdim_get(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_cartdim_get(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_cart_get(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiCartGet))
-        self.on_cart_get(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_cart_get(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_cart_rank(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiCartRank))
-        self.on_cart_rank(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_cart_rank(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_cart_coords(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiCartCoords))
-        self.on_cart_coords(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_cart_coords(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_graph_neighbors_count(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiGraphNeighborsCount))
-        self.on_graph_neighbors_count(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_graph_neighbors_count(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_graph_neighbors(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiGraphNeighbors))
-        self.on_graph_neighbors(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_graph_neighbors(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_cart_shift(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiCartShift))
-        self.on_cart_shift(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_cart_shift(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_cart_sub(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiCartSub))
-        self.on_cart_sub(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_cart_sub(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_cart_map(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiCartMap))
-        self.on_cart_map(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_cart_map(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_graph_map(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiGraphMap))
-        self.on_graph_map(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_graph_map(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_get_processor_name(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiGetProcessorName))
-        self.on_get_processor_name(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_get_processor_name(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_get_version(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiGetVersion))
-        self.on_get_version(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_get_version(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_errhandler_create(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiErrhandlerCreate))
-        self.on_errhandler_create(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_errhandler_create(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_errhandler_set(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiErrhandlerSet))
-        self.on_errhandler_set(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_errhandler_set(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_errhandler_get(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiErrhandlerGet))
-        self.on_errhandler_get(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_errhandler_get(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_errhandler_free(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiErrhandlerFree))
-        self.on_errhandler_free(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_errhandler_free(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_error_string(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiErrorString))
-        self.on_error_string(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_error_string(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_error_class(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiErrorClass))
-        self.on_error_class(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_error_class(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_wtime(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiWtime))
-        self.on_wtime(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_wtime(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_wtick(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiWtick))
-        self.on_wtick(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_wtick(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_init(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiInit))
-        self.on_init(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_init(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_finalize(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFinalize))
-        self.on_finalize(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_finalize(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_initialized(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiInitialized))
-        self.on_initialized(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_initialized(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_abort(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiAbort))
-        self.on_abort(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_abort(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_close_port(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiClosePort))
-        self.on_close_port(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_close_port(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_comm_accept(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiCommAccept))
-        self.on_comm_accept(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_comm_accept(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_comm_connect(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiCommConnect))
-        self.on_comm_connect(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_comm_connect(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_comm_disconnect(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiCommDisconnect))
-        self.on_comm_disconnect(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_comm_disconnect(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_comm_get_parent(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiCommGetParent))
-        self.on_comm_get_parent(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_comm_get_parent(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_comm_join(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiCommJoin))
-        self.on_comm_join(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_comm_join(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_comm_spawn(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiCommSpawn))
-        self.on_comm_spawn(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_comm_spawn(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_comm_spawn_multiple(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiCommSpawnMultiple))
-        self.on_comm_spawn_multiple(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_comm_spawn_multiple(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_lookup_name(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiLookupName))
-        self.on_lookup_name(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_lookup_name(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_open_port(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiOpenPort))
-        self.on_open_port(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_open_port(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_publish_name(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiPublishName))
-        self.on_publish_name(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_publish_name(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_unpublish_name(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiUnpublishName))
-        self.on_unpublish_name(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_unpublish_name(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_accumulate(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiAccumulate))
-        self.on_accumulate(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_accumulate(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_get(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiGet))
-        self.on_get(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_get(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_put(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiPut))
-        self.on_put(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_put(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_win_complete(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiWinComplete))
-        self.on_win_complete(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_win_complete(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_win_create(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiWinCreate))
-        self.on_win_create(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_win_create(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_win_fence(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiWinFence))
-        self.on_win_fence(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_win_fence(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_win_free(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiWinFree))
-        self.on_win_free(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_win_free(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_win_get_group(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiWinGetGroup))
-        self.on_win_get_group(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_win_get_group(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_win_lock(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiWinLock))
-        self.on_win_lock(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_win_lock(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_win_post(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiWinPost))
-        self.on_win_post(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_win_post(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_win_start(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiWinStart))
-        self.on_win_start(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_win_start(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_win_test(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiWinTest))
-        self.on_win_test(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_win_test(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_win_unlock(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiWinUnlock))
-        self.on_win_unlock(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_win_unlock(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_win_wait(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiWinWait))
-        self.on_win_wait(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_win_wait(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_alltoallw(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiAlltoallw))
-        self.on_alltoallw(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_alltoallw(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_exscan(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiExscan))
-        self.on_exscan(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_exscan(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_add_error_class(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiAddErrorClass))
-        self.on_add_error_class(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_add_error_class(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_add_error_code(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiAddErrorCode))
-        self.on_add_error_code(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_add_error_code(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_add_error_string(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiAddErrorString))
-        self.on_add_error_string(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_add_error_string(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_comm_call_errhandler(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiCommCallErrhandler))
-        self.on_comm_call_errhandler(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_comm_call_errhandler(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_comm_create_keyval(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiCommCreateKeyval))
-        self.on_comm_create_keyval(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_comm_create_keyval(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_comm_delete_attr(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiCommDeleteAttr))
-        self.on_comm_delete_attr(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_comm_delete_attr(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_comm_free_keyval(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiCommFreeKeyval))
-        self.on_comm_free_keyval(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_comm_free_keyval(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_comm_get_attr(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiCommGetAttr))
-        self.on_comm_get_attr(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_comm_get_attr(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_comm_get_name(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiCommGetName))
-        self.on_comm_get_name(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_comm_get_name(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_comm_set_attr(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiCommSetAttr))
-        self.on_comm_set_attr(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_comm_set_attr(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_comm_set_name(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiCommSetName))
-        self.on_comm_set_name(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_comm_set_name(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_call_errhandler(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileCallErrhandler))
-        self.on_file_call_errhandler(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_call_errhandler(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_grequest_complete(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiGrequestComplete))
-        self.on_grequest_complete(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_grequest_complete(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_grequest_start(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiGrequestStart))
-        self.on_grequest_start(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_grequest_start(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_init_thread(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiInitThread))
-        self.on_init_thread(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_init_thread(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_is_thread_main(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiIsThreadMain))
-        self.on_is_thread_main(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_is_thread_main(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_query_thread(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiQueryThread))
-        self.on_query_thread(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_query_thread(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_status_set_cancelled(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiStatusSetCancelled))
-        self.on_status_set_cancelled(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_status_set_cancelled(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_status_set_elements(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiStatusSetElements))
-        self.on_status_set_elements(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_status_set_elements(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_type_create_keyval(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiTypeCreateKeyval))
-        self.on_type_create_keyval(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_type_create_keyval(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_type_delete_attr(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiTypeDeleteAttr))
-        self.on_type_delete_attr(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_type_delete_attr(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_type_dup(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiTypeDup))
-        self.on_type_dup(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_type_dup(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_type_free_keyval(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiTypeFreeKeyval))
-        self.on_type_free_keyval(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_type_free_keyval(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_type_get_attr(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiTypeGetAttr))
-        self.on_type_get_attr(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_type_get_attr(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_type_get_contents(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiTypeGetContents))
-        self.on_type_get_contents(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_type_get_contents(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_type_get_envelope(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiTypeGetEnvelope))
-        self.on_type_get_envelope(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_type_get_envelope(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_type_get_name(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiTypeGetName))
-        self.on_type_get_name(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_type_get_name(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_type_set_attr(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiTypeSetAttr))
-        self.on_type_set_attr(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_type_set_attr(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_type_set_name(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiTypeSetName))
-        self.on_type_set_name(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_type_set_name(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_type_match_size(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiTypeMatchSize))
-        self.on_type_match_size(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_type_match_size(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_win_call_errhandler(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiWinCallErrhandler))
-        self.on_win_call_errhandler(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_win_call_errhandler(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_win_create_keyval(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiWinCreateKeyval))
-        self.on_win_create_keyval(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_win_create_keyval(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_win_delete_attr(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiWinDeleteAttr))
-        self.on_win_delete_attr(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_win_delete_attr(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_win_free_keyval(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiWinFreeKeyval))
-        self.on_win_free_keyval(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_win_free_keyval(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_win_get_attr(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiWinGetAttr))
-        self.on_win_get_attr(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_win_get_attr(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_win_get_name(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiWinGetName))
-        self.on_win_get_name(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_win_get_name(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_win_set_attr(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiWinSetAttr))
-        self.on_win_set_attr(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_win_set_attr(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_win_set_name(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiWinSetName))
-        self.on_win_set_name(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_win_set_name(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_alloc_mem(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiAllocMem))
-        self.on_alloc_mem(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_alloc_mem(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_comm_create_errhandler(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiCommCreateErrhandler))
-        self.on_comm_create_errhandler(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_comm_create_errhandler(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_comm_get_errhandler(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiCommGetErrhandler))
-        self.on_comm_get_errhandler(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_comm_get_errhandler(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_comm_set_errhandler(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiCommSetErrhandler))
-        self.on_comm_set_errhandler(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_comm_set_errhandler(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_create_errhandler(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileCreateErrhandler))
-        self.on_file_create_errhandler(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_create_errhandler(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_get_errhandler(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileGetErrhandler))
-        self.on_file_get_errhandler(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_get_errhandler(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_set_errhandler(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileSetErrhandler))
-        self.on_file_set_errhandler(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_set_errhandler(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_finalized(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFinalized))
-        self.on_finalized(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_finalized(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_free_mem(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFreeMem))
-        self.on_free_mem(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_free_mem(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_get_address(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiGetAddress))
-        self.on_get_address(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_get_address(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_info_create(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiInfoCreate))
-        self.on_info_create(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_info_create(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_info_delete(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiInfoDelete))
-        self.on_info_delete(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_info_delete(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_info_dup(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiInfoDup))
-        self.on_info_dup(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_info_dup(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_info_free(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiInfoFree))
-        self.on_info_free(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_info_free(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_info_get(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiInfoGet))
-        self.on_info_get(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_info_get(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_info_get_nkeys(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiInfoGetNkeys))
-        self.on_info_get_nkeys(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_info_get_nkeys(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_info_get_nthkey(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiInfoGetNthkey))
-        self.on_info_get_nthkey(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_info_get_nthkey(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_info_get_valuelen(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiInfoGetValuelen))
-        self.on_info_get_valuelen(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_info_get_valuelen(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_info_set(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiInfoSet))
-        self.on_info_set(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_info_set(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_pack_external(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiPackExternal))
-        self.on_pack_external(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_pack_external(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_pack_external_size(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiPackExternalSize))
-        self.on_pack_external_size(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_pack_external_size(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_request_get_status(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiRequestGetStatus))
-        self.on_request_get_status(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_request_get_status(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_type_create_darray(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiTypeCreateDarray))
-        self.on_type_create_darray(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_type_create_darray(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_type_create_hindexed(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiTypeCreateHindexed))
-        self.on_type_create_hindexed(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_type_create_hindexed(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_type_create_hvector(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiTypeCreateHvector))
-        self.on_type_create_hvector(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_type_create_hvector(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_type_create_indexed_block(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiTypeCreateIndexedBlock))
-        self.on_type_create_indexed_block(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_type_create_indexed_block(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_type_create_resized(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiTypeCreateResized))
-        self.on_type_create_resized(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_type_create_resized(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_type_create_struct(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiTypeCreateStruct))
-        self.on_type_create_struct(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_type_create_struct(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_type_create_subarray(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiTypeCreateSubarray))
-        self.on_type_create_subarray(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_type_create_subarray(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_type_get_extent(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiTypeGetExtent))
-        self.on_type_get_extent(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_type_get_extent(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_type_get_true_extent(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiTypeGetTrueExtent))
-        self.on_type_get_true_extent(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_type_get_true_extent(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_unpack_external(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiUnpackExternal))
-        self.on_unpack_external(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_unpack_external(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_win_create_errhandler(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiWinCreateErrhandler))
-        self.on_win_create_errhandler(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_win_create_errhandler(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_win_get_errhandler(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiWinGetErrhandler))
-        self.on_win_get_errhandler(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_win_get_errhandler(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_win_set_errhandler(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiWinSetErrhandler))
-        self.on_win_set_errhandler(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_win_set_errhandler(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_open(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileOpen))
-        self.on_file_open(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_open(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_close(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileClose))
-        self.on_file_close(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_close(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_delete(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileDelete))
-        self.on_file_delete(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_delete(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_set_size(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileSetSize))
-        self.on_file_set_size(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_set_size(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_preallocate(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFilePreallocate))
-        self.on_file_preallocate(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_preallocate(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_get_size(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileGetSize))
-        self.on_file_get_size(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_get_size(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_get_group(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileGetGroup))
-        self.on_file_get_group(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_get_group(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_get_amode(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileGetAmode))
-        self.on_file_get_amode(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_get_amode(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_set_info(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileSetInfo))
-        self.on_file_set_info(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_set_info(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_get_info(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileGetInfo))
-        self.on_file_get_info(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_get_info(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_set_view(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileSetView))
-        self.on_file_set_view(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_set_view(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_get_view(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileGetView))
-        self.on_file_get_view(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_get_view(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_read_at(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileReadAt))
-        self.on_file_read_at(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_read_at(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_read_at_all(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileReadAtAll))
-        self.on_file_read_at_all(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_read_at_all(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_write_at(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileWriteAt))
-        self.on_file_write_at(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_write_at(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_write_at_all(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileWriteAtAll))
-        self.on_file_write_at_all(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_write_at_all(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_iread_at(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileIreadAt))
-        self.on_file_iread_at(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_iread_at(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_iwrite_at(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileIwriteAt))
-        self.on_file_iwrite_at(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_iwrite_at(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_read(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileRead))
-        self.on_file_read(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_read(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_read_all(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileReadAll))
-        self.on_file_read_all(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_read_all(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_write(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileWrite))
-        self.on_file_write(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_write(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_write_all(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileWriteAll))
-        self.on_file_write_all(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_write_all(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_iread(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileIread))
-        self.on_file_iread(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_iread(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_iwrite(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileIwrite))
-        self.on_file_iwrite(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_iwrite(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_seek(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileSeek))
-        self.on_file_seek(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_seek(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_get_position(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileGetPosition))
-        self.on_file_get_position(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_get_position(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_get_byte_offset(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileGetByteOffset))
-        self.on_file_get_byte_offset(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_get_byte_offset(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_read_shared(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileReadShared))
-        self.on_file_read_shared(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_read_shared(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_write_shared(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileWriteShared))
-        self.on_file_write_shared(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_write_shared(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_iread_shared(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileIreadShared))
-        self.on_file_iread_shared(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_iread_shared(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_iwrite_shared(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileIwriteShared))
-        self.on_file_iwrite_shared(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_iwrite_shared(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_read_ordered(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileReadOrdered))
-        self.on_file_read_ordered(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_read_ordered(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_write_ordered(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileWriteOrdered))
-        self.on_file_write_ordered(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_write_ordered(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_seek_shared(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileSeekShared))
-        self.on_file_seek_shared(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_seek_shared(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_get_position_shared(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileGetPositionShared))
-        self.on_file_get_position_shared(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_get_position_shared(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_read_at_all_begin(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileReadAtAllBegin))
-        self.on_file_read_at_all_begin(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_read_at_all_begin(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_read_at_all_end(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileReadAtAllEnd))
-        self.on_file_read_at_all_end(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_read_at_all_end(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_write_at_all_begin(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileWriteAtAllBegin))
-        self.on_file_write_at_all_begin(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_write_at_all_begin(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_write_at_all_end(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileWriteAtAllEnd))
-        self.on_file_write_at_all_end(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_write_at_all_end(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_read_all_begin(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileReadAllBegin))
-        self.on_file_read_all_begin(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_read_all_begin(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_read_all_end(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileReadAllEnd))
-        self.on_file_read_all_end(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_read_all_end(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_write_all_begin(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileWriteAllBegin))
-        self.on_file_write_all_begin(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_write_all_begin(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_write_all_end(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileWriteAllEnd))
-        self.on_file_write_all_end(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_write_all_end(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_read_ordered_begin(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileReadOrderedBegin))
-        self.on_file_read_ordered_begin(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_read_ordered_begin(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_read_ordered_end(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileReadOrderedEnd))
-        self.on_file_read_ordered_end(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_read_ordered_end(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_write_ordered_begin(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileWriteOrderedBegin))
-        self.on_file_write_ordered_begin(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_write_ordered_begin(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_write_ordered_end(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileWriteOrderedEnd))
-        self.on_file_write_ordered_end(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_write_ordered_end(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_get_type_extent(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileGetTypeExtent))
-        self.on_file_get_type_extent(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_get_type_extent(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_register_datarep(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiRegisterDatarep))
-        self.on_register_datarep(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_register_datarep(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_set_atomicity(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileSetAtomicity))
-        self.on_file_set_atomicity(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_set_atomicity(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_get_atomicity(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileGetAtomicity))
-        self.on_file_get_atomicity(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_get_atomicity(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_file_sync(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFileSync))
-        self.on_file_sync(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_file_sync(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_iotest(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiIotest))
-        self.on_iotest(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_iotest(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_iowait(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiIowait))
-        self.on_iowait(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_iowait(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_iotestall(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiIotestall))
-        self.on_iotestall(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_iotestall(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_iowaitall(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiIowaitall))
-        self.on_iowaitall(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_iowaitall(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_iotestany(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiIotestany))
-        self.on_iotestany(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_iotestany(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_iowaitany(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiIowaitany))
-        self.on_iowaitany(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_iowaitany(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_iowaitsome(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiIowaitsome))
-        self.on_iowaitsome(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_iowaitsome(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_iotestsome(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiIotestsome))
-        self.on_iotestsome(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_iotestsome(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_function_enter(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFuncCall))
-        self.on_function_enter(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_function_enter(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1
 
     def __on_function_exit(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiFuncCall))
-        self.on_function_exit(dp.contents, thread, cpu_time, wall_time, perf_info)
+        try:
+            self.on_function_exit(dp.contents, thread, cpu_time, wall_time, perf_info)
+        except:
+            traceback.print_exc()
+            sys.exit(1)
         return 1

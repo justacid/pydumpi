@@ -25,13 +25,20 @@ undumpi_read_datatype_sizes.restype = c_int
 undumpi_read_stream = libundumpi.undumpi_read_stream
 undumpi_read_stream.argtypes = [POINTER(DumpiProfile), POINTER(DumpiCallbacks), c_void_p]
 undumpi_read_stream.restype = c_int
+undumpi_clear_callbacks = libundumpi.libundumpi_clear_callbacks
+undumpi_clear_callbacks.argtypes = [POINTER(DumpiCallbacks)]
 
 
 class DumpiTrace:
 
     def __init__(self, file_name):
         self.file_name = file_name
+        self._type_sizes = None
+        self._profile = None
+
         self.cbacks = DumpiCallbacks()
+        undumpi_clear_callbacks(byref(self.cbacks))
+
         self.cbacks.on_send = CALLBACK(self.__on_send)
         self.cbacks.on_recv = CALLBACK(self.__on_recv)
         self.cbacks.on_get_count = CALLBACK(self.__on_get_count)
@@ -325,26 +332,57 @@ class DumpiTrace:
         self.cbacks.on_function_exit = CALLBACK(self.__on_function_exit)
 
     def __enter__(self):
-        dump_file = create_string_buffer(bytes(str(self.file_name), "utf-8"));
-        self.profile = undumpi_open(dump_file)
+        self.open()
         return self
 
     def __exit__(self, *exc_details):
         self.close()
 
+    def open(self):
+        if self._profile:
+            return
+
+        # the weird conversions are for interfacing with c-strings
+        file_name_buf = create_string_buffer(bytes(str(self.file_name), "utf-8"));
+
+        # calling undumpi_read_datatype_sizes apparently moves the filepointer
+        # to the end of the file, skipping everything - we therefore open the
+        # file once to read the sizes, then reopen it again for real processing
+        profile = undumpi_open(file_name_buf)
+        sizes = DumpiSizeof()
+        undumpi_read_datatype_sizes(profile, byref(sizes))
+        self._type_sizes = [sizes.size[i] for i in range(sizes.count)]
+        libc.free(sizes.size)
+        undumpi_close(profile)
+
+        # now open the file for real
+        self._profile = undumpi_open(file_name_buf)
+
     def close(self):
-        undumpi_close(self.profile)
+        if self._profile:
+            undumpi_close(self._profile)
+
+    @property
+    def type_sizes(self):
+        if not self._profile:
+            raise ValueError("Can't read data sizes without open dumpi trace.")
+        return self._type_sizes
 
     def print_sizes(self):
-        sizes = DumpiSizeof()
-        undumpi_read_datatype_sizes(self.profile, byref(sizes))
-        print("DataTypes: ")
-        for i in range(sizes.count):
-            print(f"  {DataType(i).name} has size {sizes.size[i]}")
-        libc.free(sizes.size)
+        if not self._profile:
+            raise ValueError("Can't read data sizes without open dumpi trace.")
+        print("DataType Sizes:")
+        for i, type_size in enumerate(self.type_sizes):
+            if i < 28:
+                print(f"  {DataType(i).name} has size {type_size}")
+            else: # anything >= 28 is a user-defined type
+                print(f"  user-defined-datatype has size {type_size}")
+        print()
 
     def print_header(self):
-        header = undumpi_read_header(self.profile).contents
+        if not self._profile:
+            raise ValueError("Can't read header without open dumpi trace.")
+        header = undumpi_read_header(self._profile).contents
         v = header.version
         print("Header:")
         print(f"  version: {v[0]}.{v[1]}.{v[2]}")
@@ -369,7 +407,9 @@ class DumpiTrace:
         print()
 
     def print_footer(self):
-        footer = undumpi_read_footer(self.profile).contents
+        if not self._profile:
+            raise ValueError("Can't read footer without open dumpi trace.")
+        footer = undumpi_read_footer(self._profile).contents
         calls = [(i, c) for i, c in enumerate(footer.call_count) if c > 0]
         print("Function Call Count:")
         for call in calls:
@@ -377,7 +417,9 @@ class DumpiTrace:
         print()
 
     def read_stream(self):
-        undumpi_read_stream(self.profile, byref(self.cbacks), None)
+        if not self._profile:
+            raise ValueError("Can't read stream without open dumpi trace.")
+        undumpi_read_stream(self._profile, byref(self.cbacks), None)
 
     def on_send(self, data, thread, cpu_time, wall_time, perf_info):
         pass

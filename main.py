@@ -3,6 +3,7 @@ from dumpi.constants import DataType
 import matplotlib.pyplot as plt
 from pathlib import Path
 from os import listdir
+import sys
 
 
 class MessageTrace(DumpiTrace):
@@ -14,13 +15,14 @@ class MessageTrace(DumpiTrace):
 
     def on_isend(self, data, thread, cpu_time, wall_time, perf_info):
         self.message_count += 1
-        assert data.datatype == DataType.DOUBLE
-        self.message_sizes.append(data.count * 8)
+        size_of_type = self.type_sizes[data.datatype]
+        self.message_sizes.append(data.count * size_of_type)
 
     
 if __name__ == "__main__":
     
-    files = listdir("data");
+    folder = sys.argv[1]
+    files = listdir(folder);
     # don't count the meta file
     file_count = len(files)-1;
 
@@ -28,7 +30,7 @@ if __name__ == "__main__":
     message_sizes = []
 
     for i, file_name in enumerate(files):
-        binary_dump = Path("data") / file_name
+        binary_dump = Path(folder) / file_name
 
         # get number of processes from meta file for sanity check
         if file_name.rfind("meta") != -1:
@@ -42,15 +44,17 @@ if __name__ == "__main__":
 
         # analyze binary dumps
         with MessageTrace(binary_dump) as trace:
+            trace.print_header()
+            trace.print_footer()
+            trace.print_sizes()
+
             trace.read_stream()
             message_count += trace.message_count
             message_sizes.extend(trace.message_sizes)
 
-            # print only header & footer of first file to avoid spam
-            if i == 0:
-                trace.print_header()
-                trace.print_footer()
-                trace.print_sizes()
+            print(f"{trace.message_count} messages parsed.")
+            print(f"Done with file '{file_name}'...\n")
+
 
     print(f"Total messages sent: {message_count}")
     # convert sizes to kbyte

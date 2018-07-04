@@ -1,3 +1,4 @@
+from ctypes.util import find_library
 from ctypes import cast, POINTER
 from .callbacks import DumpiCallbacks, CALLBACK
 from .constants import DataType
@@ -7,8 +8,8 @@ import time
 import sys
 
 
-libundumpi = CDLL("libundumpi.so.8")
-libc = CDLL("libc.so.6")
+libundumpi = CDLL(find_library("undumpi"))
+libc = CDLL(find_library("c"))
 undumpi_open = libundumpi.undumpi_open
 undumpi_open.argtypes = [c_char_p]
 undumpi_open.restype = POINTER(DumpiProfile)

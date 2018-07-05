@@ -30,6 +30,34 @@ class DumpiClock(Structure):
         ("nsec", c_int),
     ]
 
+    def __str__(self):
+        return f"DumpiClock(sec={self.sec}, nsec={self.nsec})]"
+
+    def to_sec(self):
+        return self.sec + self.nsec / 1e9
+
+    def to_ms(self):
+        return self.sec * 1000 + self.nsec * 1e-6
+
+    def to_ns(self):
+        return int(self.nsec + self.sec * 1e9)
+
+    def __sub__(self, rhs):
+        nsec = (self.nsec + self.sec * 1e9) - (rhs.nsec + rhs.sec * 1e9)
+        result = DumpiClock(int(nsec / 1e9), int(nsec % 1e9)) 
+        if nsec < 0:
+            result.nsec = abs(result.nsec) \
+                if result.sec != 0 else -abs(result.nsec)
+        return result
+
+    def __add__(self, rhs):
+        nsec = (self.nsec + self.sec * 1e9) + (rhs.nsec + rhs.sec * 1e9)
+        result = DumpiClock(int(nsec / 1e9), int(nsec % 1e9)) 
+        if nsec < 0:
+            result.nsec = abs(result.nsec) \
+                if result.sec != 0 else -abs(result.nsec)
+        return result
+
 class DumpiTime(Structure):
     _fields_ = [
         ("start", DumpiClock),

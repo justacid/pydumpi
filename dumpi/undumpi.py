@@ -704,14 +704,21 @@ class DumpiTrace:
         print()
 
     def print_footer(self):
+        calls, _ = self.read_footer()
+        print("Function Call Count:")
+        for name, count in calls.items():
+            print(f"  {name}: {count}")
+        print()
+
+    def read_footer(self):
         if not self._profile:
             raise ValueError("Can't read footer without open dumpi trace.")
         footer = undumpi_read_footer(self._profile).contents
-        calls = [(i, c) for i, c in enumerate(footer.call_count) if c > 0]
-        print("Function Call Count:")
-        for call in calls:
-            print(f"  {DumpiCallbacks._fields_[call[0]][0]}: {call[1]}")
-        print()
+        funcs = [(i, c) for i, c in enumerate(footer.call_count) if c > 0]
+        ignored = [(i, c) for i, c in enumerate(footer.ignored_count) if c > 0]
+        function_calls = {DumpiCallbacks._fields_[idx][0]: c for idx, c in funcs}
+        ignored_calls = {DumpiCallbacks._fields_[idx][0]: c for idx, c in ignored}
+        return function_calls, ignored_calls
 
     def print_keyvals(self):
         keyvals = self.read_keyvals()

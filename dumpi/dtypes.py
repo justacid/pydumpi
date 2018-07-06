@@ -18,6 +18,23 @@ class DumpiFooter(Structure):
         ("ignored_count", c_int*291),
     ]
 
+class DumpiKeyvalEntry(Structure):
+    pass
+
+# need to separate the fields here, to allow incomplete type
+DumpiKeyvalEntry._fields_ = [
+    ("key", c_char_p),
+    ("val", c_char_p),
+    ("next", POINTER(DumpiKeyvalEntry)),
+]
+
+class DumpiKeyvalRecord(Structure):
+    _fields_ = [
+        ("count", c_int),
+        ("head", POINTER(DumpiKeyvalEntry)),
+        ("tail", POINTER(DumpiKeyvalEntry)),
+    ]
+
 class DumpiSizeof(Structure):
     _fields_ = [
         ("count", c_short),

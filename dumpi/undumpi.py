@@ -28,6 +28,9 @@ undumpi_read_datatype_sizes.restype = c_int
 undumpi_read_stream = libundumpi.undumpi_read_stream
 undumpi_read_stream.argtypes = [POINTER(DumpiProfile), POINTER(DumpiCallbacks), c_void_p]
 undumpi_read_stream.restype = c_int
+undumpi_read_keyval_record = libundumpi.undumpi_read_keyval_record
+undumpi_read_keyval_record.argtypes = [POINTER(DumpiProfile)]
+undumpi_read_keyval_record.restype = POINTER(DumpiKeyvalRecord)
 undumpi_clear_callbacks = libundumpi.libundumpi_clear_callbacks
 undumpi_clear_callbacks.argtypes = [POINTER(DumpiCallbacks)]
 
@@ -709,6 +712,25 @@ class DumpiTrace:
         for call in calls:
             print(f"  {DumpiCallbacks._fields_[call[0]][0]}: {call[1]}")
         print()
+
+    def print_keyvals(self):
+        keyvals = self.read_keyvals()
+        print(f"Total keyvals: {len(keyvals)}")
+        for key, value in keyvals:
+            print(f"  {key}={value}")
+
+    def read_keyvals(self):
+        if not self._profile:
+            raise ValueError("Can't read keyvals without open dumpi trace.")
+        record = undumpi_read_keyval_record(self._profile)
+        keyvals = {}
+        if record:
+            current = record.contents.head
+            while current:
+                keyvals[current.contents.key] = current.contents.val
+                current = current.contents.next
+            libc.free(record)
+        return keyvals
 
     def read_stream(self):
         if not self._profile:

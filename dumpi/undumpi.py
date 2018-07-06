@@ -723,7 +723,7 @@ class DumpiTrace:
     def print_keyvals(self):
         keyvals = self.read_keyvals()
         print(f"Total keyvals: {len(keyvals)}")
-        for key, value in keyvals:
+        for key, value in keyvals.items():
             print(f"  {key}={value}")
 
     def read_keyvals(self):

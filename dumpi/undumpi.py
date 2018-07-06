@@ -677,17 +677,16 @@ class DumpiTrace:
         print()
 
     def print_header(self):
-        if not self._profile:
-            raise ValueError("Can't read header without open dumpi trace.")
-        header = undumpi_read_header(self._profile).contents
-        v = header.version
+        header = self.read_header()
+        version = header.version
+        timestamp = time.asctime(time.gmtime(header.starttime))
+        meshdim = header.meshdim
+
         print("Header:")
-        print(f"  version: {v[0]}.{v[1]}.{v[2]}")
-        time_struct = time.gmtime(header.starttime)
-        print(f"  starttime: {time.asctime(time_struct)}")
+        print(f"  version: {version[0]}.{version[1]}.{version[2]}")
+        print(f"  starttime: {timestamp}")
         print(f"  hostname: {header.hostname.decode('utf-8')}")
         print(f"  username: {header.username.decode('utf-8')}")
-        meshdim = header.meshdim
         print(f"  meshdim: {meshdim}")
         print("  meshsize: [", end="")
         for i in range(meshdim):
@@ -702,6 +701,11 @@ class DumpiTrace:
                 print(", ", end="")
         print("]")
         print()
+
+    def read_header(self):
+        if not self._profile:
+            raise ValueError("Can't read header without open dumpi trace.")
+        return undumpi_read_header(self._profile).contents
 
     def print_footer(self):
         calls, _ = self.read_footer()

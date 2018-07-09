@@ -11,7 +11,7 @@ setuptools.setup(
     description="Python bindings for the sst-dumpi trace format",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://gitlab.com/justacid/python-dumpi",
+    url="https://github.com/justacid/pydumpi",
     packages=setuptools.find_packages(),
     python_requires=">=3.6",
     classifiers=(

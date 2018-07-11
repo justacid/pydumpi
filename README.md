@@ -1,9 +1,19 @@
 # SST-DUMPI Python Bindings
 Python bindings for the SST-DUMPI Trace Library.
 
-## Installation
-This package only runs on Linux. Clone this repository and 
-install the package with pip in a virtual environment, e.g:
+## Install
+Pydumpi is available at [PyPi](https://pypi.org/project/pydumpi):
+
+```bash
+pip install pydumpi
+```
+
+**Note**: The PyPI package contains a prebuilt shared library, this might not 
+work on very old systems, and is linux only. If this does not work for you
+installing from source is your only option.
+
+## Install from Source
+Clone this repository and install the package with pip in a virtual environment, e.g:
 
 ```bash
 git clone http://github.com/justacid/pydumpi
@@ -30,7 +40,7 @@ from pydumpi import DumpiTrace
 class MyTrace(DumpiTrace):
 
     def __init__(self, file_name):
-        super(MyTrace, self).__init__(file_name)
+        super().__init__(file_name)
         self.message_count = 0
 
     def on_send(self, data, thread, cpu_time, wall_time, perf_info):

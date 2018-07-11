@@ -45,10 +45,10 @@ with open("README.md", "r") as f:
 
 setuptools.setup(
     name="pydumpi",
-    version="0.0.1",
+    version="0.1.0",
     author="Tobias Schwackenhofer",
     author_email="tobiasschw@gmail.com",
-    description="Python bindings for the sst-dumpi trace format",
+    description="Python bindings for the sst-dumpi trace format.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/justacid/pydumpi",

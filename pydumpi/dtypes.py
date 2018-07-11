@@ -48,7 +48,7 @@ class DumpiClock(Structure):
     ]
 
     def __str__(self):
-        return f"DumpiClock(sec={self.sec}, nsec={self.nsec})]"
+        return "DumpiClock(sec={0}, nsec={1})]".format(self.sec, self.nsec)
 
     def to_sec(self):
         return self.sec + self.nsec / 1e9

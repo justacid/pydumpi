@@ -679,9 +679,9 @@ class DumpiTrace:
         print("DataType Sizes:")
         for i, type_size in enumerate(self.type_sizes):
             if i < 28:
-                print(f"  {DataType(i).name} has size {type_size}")
+                print("  {0} has size {1}".format(DataType(i).name, type_size))
             else: # anything >= 28 is a user-defined type
-                print(f"  user-defined-datatype has size {type_size}")
+                print("  user-defined-datatype has size {0}".format(type_size))
         print()
 
     def print_header(self):
@@ -691,20 +691,20 @@ class DumpiTrace:
         meshdim = header.meshdim
 
         print("Header:")
-        print(f"  version: {version[0]}.{version[1]}.{version[2]}")
-        print(f"  starttime: {timestamp}")
-        print(f"  hostname: {header.hostname.decode('utf-8')}")
-        print(f"  username: {header.username.decode('utf-8')}")
-        print(f"  meshdim: {meshdim}")
+        print("  version: {0}.{1}.{2}".format(version[0], version[1], version[2]))
+        print("  starttime: {0}".format(timestamp))
+        print("  hostname: {0}".format(header.hostname.decode('utf-8')))
+        print("  username: {0}".format(header.username.decode('utf-8')))
+        print("  meshdim: {0}".format(meshdim))
         print("  meshsize: [", end="")
         for i in range(meshdim):
-            print("{header.meshsize[i]}", end="")
+            print("{0}".format(header.meshsize[i]), end="")
             if i < meshdim-1:
                 print(", ", end="")
         print("]")
         print("  meshcrd: [", end="")
         for i in range(meshdim):
-            print("{header.meshcrd[i]}", end="")
+            print("{0}".format(header.meshcrd[i]), end="")
             if i < meshdim-1:
                 print(", ", end="")
         print("]")
@@ -719,7 +719,7 @@ class DumpiTrace:
         calls, _ = self.read_footer()
         print("Function Call Count:")
         for name, count in calls.items():
-            print(f"  {name}: {count}")
+            print("  {0}: {1}".format(name, count))
         print()
 
     def read_footer(self):
@@ -734,9 +734,9 @@ class DumpiTrace:
 
     def print_keyvals(self):
         keyvals = self.read_keyvals()
-        print(f"Total keyvals: {len(keyvals)}")
+        print("Total keyvals: {0}".format(len(keyvals)))
         for key, value in keyvals.items():
-            print(f"  {key}={value}")
+            print("  {0}={1}".format(key, value))
 
     def read_keyvals(self):
         if not self._profile:

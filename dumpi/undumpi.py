@@ -3,12 +3,20 @@ from ctypes import cast, POINTER
 from .callbacks import DumpiCallbacks, CALLBACK
 from .constants import DataType
 from .dtypes import *
+from pathlib import Path
 import traceback
+import os.path
 import time
 import sys
 
 
-libundumpi = CDLL(find_library("undumpi"))
+undumpi = find_library("undumpi")
+if undumpi is None:
+    undumpi = Path(os.path.dirname(__file__)) / Path("lib") / "libundumpi.so.8.0.0"
+    if not os.path.isfile(undumpi):
+        raise ValueError("Could not find libundumpi!")
+
+libundumpi = CDLL(undumpi)
 libc = CDLL(find_library("c"))
 undumpi_open = libundumpi.undumpi_open
 undumpi_open.argtypes = [c_char_p]

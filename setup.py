@@ -32,7 +32,7 @@ class BuildSharedLib(build_py):
                 os.chdir("sst-dumpi")
                 call(["git", "checkout", commit_hash])
                 call(["./bootstrap.sh"])
-                call(["./configure", "--disable-static", f"--prefix={cwd}/pydumpi"])
+                call(["./configure", "--disable-static", "--prefix={0}/pydumpi".format(cwd)])
                 call(["make"])
                 call(["make", "install"])
                 os.chdir(cwd)
@@ -55,7 +55,7 @@ setuptools.setup(
     distclass=BinaryDistribution,
     packages=["pydumpi"],
     package_data={"pydumpi": ["lib/libundumpi.so.8.0.0"]},
-    python_requires=">=3.6",
+    python_requires=">=3.4",
     cmdclass={"build_py": BuildSharedLib},
     classifiers=(
         "Programming Language :: Python :: 3",

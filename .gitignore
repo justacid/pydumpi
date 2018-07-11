@@ -1,6 +1,9 @@
 ### Misc ###
 *.bin
 *.meta
+bin/
+include/
+sst-dumpi/
 
 ### C++ ###
 *.d

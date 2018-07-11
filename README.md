@@ -1,36 +1,30 @@
 # SST-DUMPI Python Bindings
 Python bindings for the SST-DUMPI Trace Library.
 
-## Prerequisites
-The libundumpi library must be installed and on the path - clone 
-the repository from https://github.com/sstsimulator/sst-dumpi and run:
-
-```bash
-./bootstrap.sh
-./configure --prefix=/usr
-sudo make && make install
-```
-
-libundumpi can of course be installed wherever desired, but you
-must make sure that it can be found somwhere on the path.
-
 ## Installation
-Clone this repository and install the package with pip, e.g:
+This package only runs on Linux. Clone this repository and 
+install the package with pip in a virtual environment, e.g:
 
 ```bash
 git clone http://github.com/justacid/pydumpi
 cd myproject
-source myvenv/bin/activate
+source venv/bin/activate
 pip install ../pydumpi
 ```
 
-## Usage Example
+The install might take some time - if the dumpi library can not be found
+on the path it will be downloaded and compiled during the install
+process. You can also install libundumpi globally, for more 
+information on how to install globally refer to the
+[sst-dumpi repository](https://github.com/sstsimulator/sst-dumpi).
+
+## Usage Examples
 Inherit from DumpiTrace and override the callbacks you are interested in.
 Every MPI function has an available callback. A complete list can be found 
 in *dumpi/callbacks.py*.
 
 ```python
-from dumpi.undumpi import DumpiTrace
+from pydumpi import DumpiTrace
 
 
 class MyTrace(DumpiTrace):
@@ -63,4 +57,15 @@ which callbacks need to be overriden for further analysis.
 with DumpiTrace("path/to/some/trace.bin") as trace:
     trace.print_header()
     trace.print_footer()
+```
+
+There also is a utilty function to read all binary traces in a folder. The 
+function will search for a meta file in a given directory, do some basic sanity
+checks and return a list with all binary traces.
+
+```python
+from pydumpi.util import trace_files_from_dir
+
+for fname in trace_files_from_dir("path/to/data_dir"):
+    print(fname)
 ```

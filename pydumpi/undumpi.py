@@ -12,7 +12,7 @@ import sys
 
 undumpi = find_library("undumpi")
 if undumpi is None:
-    undumpi = Path(os.path.dirname(__file__)) / Path("lib") / "libundumpi.so.8.0.0"
+    undumpi = str(Path(os.path.dirname(__file__)) / Path("lib") / "libundumpi.so.8.0.0")
     if not os.path.isfile(undumpi):
         raise ValueError("Could not find libundumpi!")
 

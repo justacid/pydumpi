@@ -49,7 +49,10 @@ class DumpiTrace:
         self.file_name = file_name
         self._type_sizes = None
         self._profile = None
+        self.cbacks = None
+        self._reset_callbacks()
 
+    def _reset_callbacks(self):
         self.cbacks = DumpiCallbacks()
         undumpi_clear_callbacks(byref(self.cbacks))
 

@@ -52,7 +52,7 @@ class MyTrace(DumpiTrace):
         print(f"Message received on thread '{thread}' from thread '{data.source}'.")
 
 
-with MessageTrace("path/to/some/trace.bin") as trace:
+with MyTrace("path/to/some/trace.bin") as trace:
     trace.print_header()
     trace.read_stream()
     print(trace.message_count)

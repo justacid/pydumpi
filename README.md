@@ -58,6 +58,11 @@ with MyTrace("path/to/some/trace.bin") as trace:
     print(trace.message_count)
 ```
 
+**Important:** Since the C backend frees the data after a callback returns,
+it is only valid *within* a callback (including wall and cpu time). If you
+need to store it perform a deep copy, otherwise you get garbage values.
+
+### Meta Data
 You can inspect the meta data of a dumpi trace by printing the header and
 footer. In particular the footer prints a list of all MPI functions that 
 were called during a trace - this information can help guide you in deciding

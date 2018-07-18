@@ -1,3 +1,4 @@
+""" This module exposes the C library libundumpi to Python. """
 from ctypes.util import find_library
 from ctypes import cast, POINTER
 from .callbacks import DumpiCallbacks, CALLBACK
@@ -44,15 +45,252 @@ undumpi_clear_callbacks.argtypes = [POINTER(DumpiCallbacks)]
 
 
 class DumpiTrace:
+    """ Represents a binary dumpi trace. This class can be used to directly read 
+    meta data of a trace, but most commonly it will be inherited from, such that
+    custom callbacks can be registered. It is recommended to use this class or
+    its child classes in conjunction with the with-statement, such that data is
+    always correctly freed. For information on how to register callbacks for 
+    MPI functions please refer to the readme.
+
+    Attributes
+    ----------
+    file_name: str
+        The path to a dumpi binary trace.
+
+    cbacks: DumpiCallbacks
+        The registered callbacks.
+    """
 
     def __init__(self, file_name):
         self.file_name = file_name
+        self.cbacks = None
         self._type_sizes = None
         self._profile = None
-        self.cbacks = None
         self._reset_callbacks()
 
+    def open(self):
+        """ Opens the trace for reading. """
+        if self._profile:
+            return
+
+        # the weird conversions are for interfacing with c-strings
+        file_name_buf = create_string_buffer(bytes(str(self.file_name), "utf-8"));
+
+        # calling undumpi_read_datatype_sizes apparently moves the filepointer
+        # to the end of the file, skipping everything - we therefore open the
+        # file once to read the sizes, then reopen it again for real processing
+        profile = undumpi_open(file_name_buf)
+        sizes = DumpiSizeof()
+        undumpi_read_datatype_sizes(profile, byref(sizes))
+        self._type_sizes = [sizes.size[i] for i in range(sizes.count)]
+        libc.free(sizes.size)
+        undumpi_close(profile)
+
+        # now open the file for real
+        self._profile = undumpi_open(file_name_buf)
+
+    def close(self):
+        """ Close a trace. """
+        if self._profile:
+            undumpi_close(self._profile)
+
+    def read_stream(self):
+        """ Fires of the streaming parser. From this point on, every registered 
+        callback gets called whenever the parser finished with its corresponding
+        MPI function.
+
+        Raises
+        ------
+        ValueError
+            If the trace file is not open.
+        """
+        if not self._profile:
+            raise ValueError("Can't read stream without open dumpi trace.")
+        undumpi_read_stream(self._profile, byref(self.cbacks), None)
+
+    @property
+    def type_sizes(self):
+        """ The sizes of MPI types in bytes.
+
+        Returns
+        -------
+        list of int
+            A list of type sizes, indexable by the datatype members of MPI messages.
+
+        Raises
+        ------
+        ValueError
+            If the trace file is not open.
+        """
+        if not self._profile:
+            raise ValueError("Can't read data sizes without open dumpi trace.")
+        return self._type_sizes
+
+    def print_sizes(self):
+        """ Print the sizes of all MPI types. 
+
+        Raises
+        ------
+        ValueError
+            If the trace file is not open.
+        """
+        if not self._profile:
+            raise ValueError("Can't read data sizes without open dumpi trace.")
+        print("DataType Sizes:")
+        for i, type_size in enumerate(self.type_sizes):
+            if i < 28:
+                print("  {0} has size {1}".format(DataType(i).name, type_size))
+            else: # anything >= 28 is a user-defined type
+                print("  user-defined-datatype has size {0}".format(type_size))
+        print()
+
+    def print_header(self):
+        """ Print the trace header. This meta data includes the dumpi version,
+        timepoint when trace collection started, hostname, username, mesh dimensions
+        and the meshsize.
+
+        Raises
+        ------
+        ValueError
+            If the trace file is not open.
+        """
+        header = self.read_header()
+        version = header.version
+        timestamp = time.asctime(time.gmtime(header.starttime))
+        meshdim = header.meshdim
+
+        print("Header:")
+        print("  version: {0}.{1}.{2}".format(version[0], version[1], version[2]))
+        print("  starttime: {0}".format(timestamp))
+        print("  hostname: {0}".format(header.hostname.decode('utf-8')))
+        print("  username: {0}".format(header.username.decode('utf-8')))
+        print("  meshdim: {0}".format(meshdim))
+        print("  meshsize: [", end="")
+        for i in range(meshdim):
+            print("{0}".format(header.meshsize[i]), end="")
+            if i < meshdim-1:
+                print(", ", end="")
+        print("]")
+        print("  meshcrd: [", end="")
+        for i in range(meshdim):
+            print("{0}".format(header.meshcrd[i]), end="")
+            if i < meshdim-1:
+                print(", ", end="")
+        print("]")
+        print()
+
+    def read_header(self):
+        """ Read the trace header. This meta data includes the dumpi version,
+        timepoint when trace collection started, hostname, username, mesh dimensions
+        and the meshsize.
+
+        Returns
+        -------
+        DumpiHeader
+            The header of a binary trace file.
+
+        Raises
+        ------
+        ValueError
+            If the trace file is not open.
+        """
+        if not self._profile:
+            raise ValueError("Can't read header without open dumpi trace.")
+        return undumpi_read_header(self._profile).contents
+
+    def print_footer(self):
+        """ Print the trace footer. This meta data includes information about
+        which MPI functions where called, or ignored, and how often.
+
+        Raises
+        ------
+        ValueError
+            If the trace file is not open.
+        """
+        calls, _ = self.read_footer()
+        print("Function Call Count:")
+        for name, count in calls.items():
+            print("  {0}: {1}".format(name, count))
+        print()
+
+    def read_footer(self):
+        """ Read the trace footer. This meta data includes information about
+        which MPI functions where called, or ignored, and how often.
+
+        Returns
+        -------
+        2-tuple of dicts
+            The first tuple entry is a dictionary of called functions and their
+            call counts. The second tuple is a dictionary of ignored functions and their
+            corresponding ignore counts.
+
+        Raises
+        ------
+        ValueError
+            If the trace file is not open.
+        """
+        if not self._profile:
+            raise ValueError("Can't read footer without open dumpi trace.")
+        footer = undumpi_read_footer(self._profile).contents
+        funcs = [(i, c) for i, c in enumerate(footer.call_count) if c > 0]
+        ignored = [(i, c) for i, c in enumerate(footer.ignored_count) if c > 0]
+        function_calls = {DumpiCallbacks._fields_[idx][0]: c for idx, c in funcs}
+        ignored_calls = {DumpiCallbacks._fields_[idx][0]: c for idx, c in ignored}
+        return function_calls, ignored_calls
+
+    def print_keyvals(self):
+        """ Print the key-value pairs from the trace. This is user-defined data.
+
+        Raises
+        ------
+        ValueError
+            If the trace file is not open.
+        """
+        keyvals = self.read_keyvals()
+        print("Total keyvals: {0}".format(len(keyvals)))
+        for key, value in keyvals.items():
+            print("  {0}={1}".format(key, value))
+
+    def read_keyvals(self):
+        """ Read the key-value pairs from the trace. This is user-defined data.
+
+        Returns
+        -------
+        dict
+            A dictionary of user-defined key-value pairs.
+
+        Raises
+        ------
+        ValueError
+            If the trace file is not open.
+        """
+        if not self._profile:
+            raise ValueError("Can't read keyvals without open dumpi trace.")
+        record = undumpi_read_keyval_record(self._profile)
+        keyvals = {}
+        if record:
+            current = record.contents.head
+            while current:
+                keyvals[current.contents.key] = current.contents.val
+                current = current.contents.next
+            libc.free(record)
+        return keyvals
+
+    def __enter__(self):
+        """ Opens a trace context. """
+        self.open()
+        return self
+
+    def __exit__(self, *exc_details):
+        """ Closes a trace context. """
+        self.close()
+
     def _reset_callbacks(self):
+        """
+        Registers callbacks with the C backend. Only methods that actually exist are 
+        registered - this improves performance for cases were particular methods were
+        originally called in the trace, but we are not interested in them.
+        """
         self.cbacks = DumpiCallbacks()
         undumpi_clear_callbacks(byref(self.cbacks))
 
@@ -638,126 +876,6 @@ class DumpiTrace:
             self.cbacks.on_function_enter = CALLBACK(self.__on_function_enter)
         if hasattr(self, "on_function_exit"):
             self.cbacks.on_function_exit = CALLBACK(self.__on_function_exit)
-
-    def __enter__(self):
-        self.open()
-        return self
-
-    def __exit__(self, *exc_details):
-        self.close()
-
-    def open(self):
-        if self._profile:
-            return
-
-        # the weird conversions are for interfacing with c-strings
-        file_name_buf = create_string_buffer(bytes(str(self.file_name), "utf-8"));
-
-        # calling undumpi_read_datatype_sizes apparently moves the filepointer
-        # to the end of the file, skipping everything - we therefore open the
-        # file once to read the sizes, then reopen it again for real processing
-        profile = undumpi_open(file_name_buf)
-        sizes = DumpiSizeof()
-        undumpi_read_datatype_sizes(profile, byref(sizes))
-        self._type_sizes = [sizes.size[i] for i in range(sizes.count)]
-        libc.free(sizes.size)
-        undumpi_close(profile)
-
-        # now open the file for real
-        self._profile = undumpi_open(file_name_buf)
-
-    def close(self):
-        if self._profile:
-            undumpi_close(self._profile)
-
-    @property
-    def type_sizes(self):
-        if not self._profile:
-            raise ValueError("Can't read data sizes without open dumpi trace.")
-        return self._type_sizes
-
-    def print_sizes(self):
-        if not self._profile:
-            raise ValueError("Can't read data sizes without open dumpi trace.")
-        print("DataType Sizes:")
-        for i, type_size in enumerate(self.type_sizes):
-            if i < 28:
-                print("  {0} has size {1}".format(DataType(i).name, type_size))
-            else: # anything >= 28 is a user-defined type
-                print("  user-defined-datatype has size {0}".format(type_size))
-        print()
-
-    def print_header(self):
-        header = self.read_header()
-        version = header.version
-        timestamp = time.asctime(time.gmtime(header.starttime))
-        meshdim = header.meshdim
-
-        print("Header:")
-        print("  version: {0}.{1}.{2}".format(version[0], version[1], version[2]))
-        print("  starttime: {0}".format(timestamp))
-        print("  hostname: {0}".format(header.hostname.decode('utf-8')))
-        print("  username: {0}".format(header.username.decode('utf-8')))
-        print("  meshdim: {0}".format(meshdim))
-        print("  meshsize: [", end="")
-        for i in range(meshdim):
-            print("{0}".format(header.meshsize[i]), end="")
-            if i < meshdim-1:
-                print(", ", end="")
-        print("]")
-        print("  meshcrd: [", end="")
-        for i in range(meshdim):
-            print("{0}".format(header.meshcrd[i]), end="")
-            if i < meshdim-1:
-                print(", ", end="")
-        print("]")
-        print()
-
-    def read_header(self):
-        if not self._profile:
-            raise ValueError("Can't read header without open dumpi trace.")
-        return undumpi_read_header(self._profile).contents
-
-    def print_footer(self):
-        calls, _ = self.read_footer()
-        print("Function Call Count:")
-        for name, count in calls.items():
-            print("  {0}: {1}".format(name, count))
-        print()
-
-    def read_footer(self):
-        if not self._profile:
-            raise ValueError("Can't read footer without open dumpi trace.")
-        footer = undumpi_read_footer(self._profile).contents
-        funcs = [(i, c) for i, c in enumerate(footer.call_count) if c > 0]
-        ignored = [(i, c) for i, c in enumerate(footer.ignored_count) if c > 0]
-        function_calls = {DumpiCallbacks._fields_[idx][0]: c for idx, c in funcs}
-        ignored_calls = {DumpiCallbacks._fields_[idx][0]: c for idx, c in ignored}
-        return function_calls, ignored_calls
-
-    def print_keyvals(self):
-        keyvals = self.read_keyvals()
-        print("Total keyvals: {0}".format(len(keyvals)))
-        for key, value in keyvals.items():
-            print("  {0}={1}".format(key, value))
-
-    def read_keyvals(self):
-        if not self._profile:
-            raise ValueError("Can't read keyvals without open dumpi trace.")
-        record = undumpi_read_keyval_record(self._profile)
-        keyvals = {}
-        if record:
-            current = record.contents.head
-            while current:
-                keyvals[current.contents.key] = current.contents.val
-                current = current.contents.next
-            libc.free(record)
-        return keyvals
-
-    def read_stream(self):
-        if not self._profile:
-            raise ValueError("Can't read stream without open dumpi trace.")
-        undumpi_read_stream(self._profile, byref(self.cbacks), None)
 
     def __on_send(self, data, thread, cpu_time, wall_time, perf_info, userdata):
         dp = cast(data, POINTER(DumpiSend))

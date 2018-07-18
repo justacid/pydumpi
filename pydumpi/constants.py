@@ -1,7 +1,9 @@
+""" Constants. """
 from enum import IntEnum
 
 
 class DataType(IntEnum):
+    """ Enum of data types. Does not include user-defined types. """
     ERROR = 0
     NULL = 1
     CHAR = 2

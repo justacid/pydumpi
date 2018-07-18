@@ -1,3 +1,4 @@
+""" This module exposes the C callback struct to Python. """
 from ctypes import c_int, c_void_p, c_ushort, Structure, POINTER, CFUNCTYPE
 from .dtypes import DumpiTime, DumpiPerfInfo
 

@@ -1,3 +1,4 @@
+""" This module exposes all C data structs to Python. """
 from ctypes import *
 
 
